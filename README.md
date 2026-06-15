@@ -228,7 +228,7 @@ Puedes colaborar mediante:
 
 ## 👨‍💻 Desarrollador
 
-### Isai Reyes Peña
+### Isai Reyes
 
 **Full Stack Developer**
 
@@ -266,6 +266,6 @@ Esto permite compartir y adaptar el contenido siempre que:
 
 ⭐ Si te gusta este proyecto, apóyalo con una estrella en GitHub.
 
-**Desarrollado por Isai Reyes Peña**
+**Desarrollado por Isai Reyes**
 
 </div>
