@@ -1,0 +1,140 @@
+{
+	"$schema": "./node_modules/nx/schemas/nx-schema.json",
+	"npmScope": "cuentoneta",
+	"useInferencePlugins": true,
+	"tasksRunnerOptions": {
+		"default": {
+			"runner": "nx-cloud",
+			"options": {
+				"cacheableOperations": ["lint", "test", "e2e", "build-storybook"]
+			}
+		}
+	},
+	"targetDefaults": {
+		"build": {
+			"dependsOn": ["^build"],
+			"inputs": ["production", "^production"]
+		},
+		"e2e": {
+			"inputs": ["default", "^production"]
+		},
+		"lint": {
+			"inputs": ["default", "{workspaceRoot}/eslint.config.js"]
+		},
+		"build-storybook": {
+			"inputs": ["default", "^production", "{projectRoot}/.storybook/**/*", "{projectRoot}/tsconfig.storybook.json"],
+			"cache": true
+		},
+		"@nx/jest:jest": {
+			"inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
+			"cache": true,
+			"options": {
+				"passWithNoTests": true
+			},
+			"configurations": {
+				"ci": {
+					"ci": true,
+					"codeCoverage": true
+				}
+			}
+		},
+		"stylelint": {
+			"inputs": ["default", "{workspaceRoot}/.stylelintrc(.(json|yml|yaml|js))?"],
+			"cache": true
+		}
+	},
+	"namedInputs": {
+		"default": ["{projectRoot}/**/*", "sharedGlobals"],
+		"production": [
+			"default",
+			"!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+			"!{projectRoot}/tsconfig.spec.json",
+			"!{projectRoot}/jest.config.[jt]s",
+			"!{projectRoot}/eslint.config.js",
+			"!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)",
+			"!{projectRoot}/.storybook/**/*",
+			"!{projectRoot}/tsconfig.storybook.json",
+			"!{projectRoot}/src/test-setup.[jt]s",
+			"!{projectRoot}/.stylelintrc(.(json|yml|yaml|js))?"
+		],
+		"sharedGlobals": []
+	},
+	"generators": {
+		"@nx/angular:application": {
+			"style": "css",
+			"linter": "eslint",
+			"unitTestRunner": "jest",
+			"e2eTestRunner": "cypress"
+		},
+		"@nx/angular:library": {
+			"linter": "eslint",
+			"unitTestRunner": "jest"
+		},
+		"@nx/angular:component": {
+			"style": "css",
+			"type": "component"
+		},
+		"@schematics/angular:component": {
+			"type": "component"
+		},
+		"@nx/angular:directive": {
+			"type": "directive"
+		},
+		"@schematics/angular:directive": {
+			"type": "directive"
+		},
+		"@nx/angular:service": {
+			"type": "service"
+		},
+		"@schematics/angular:service": {
+			"type": "service"
+		},
+		"@nx/angular:scam": {
+			"type": "component"
+		},
+		"@nx/angular:scam-directive": {
+			"type": "directive"
+		},
+		"@nx/angular:guard": {
+			"typeSeparator": "."
+		},
+		"@schematics/angular:guard": {
+			"typeSeparator": "."
+		},
+		"@nx/angular:interceptor": {
+			"typeSeparator": "."
+		},
+		"@schematics/angular:interceptor": {
+			"typeSeparator": "."
+		},
+		"@nx/angular:module": {
+			"typeSeparator": "."
+		},
+		"@schematics/angular:module": {
+			"typeSeparator": "."
+		},
+		"@nx/angular:pipe": {
+			"typeSeparator": "."
+		},
+		"@schematics/angular:pipe": {
+			"typeSeparator": "."
+		},
+		"@nx/angular:resolver": {
+			"typeSeparator": "."
+		},
+		"@schematics/angular:resolver": {
+			"typeSeparator": "."
+		}
+	},
+	"defaultProject": "@cuentoneta/app",
+	"plugins": [
+		{
+			"plugin": "@nx/eslint/plugin",
+			"options": {
+				"targetName": "eslint:lint"
+			}
+		}
+	],
+	"nxCloudId": "639687547a4efa4dbb11b35a",
+	"analytics": true
+}

@@ -1,0 +1,77 @@
+// Repository
+import {
+	createLandingPages,
+	fetchAndMapLandingPageContent,
+	fetchLandingPagesList,
+	fetchLatestLandingPageReferences,
+	fetchRotatingContent,
+} from './content.repository';
+
+// Modelos
+import { LandingPageContent, RotatingContent } from '@models/landing-page-content.model';
+
+// Utils
+import { addWeeks, getWeek, getYear } from 'date-fns';
+import slugify from 'slugify';
+
+export async function getLandingPageContent(): Promise<LandingPageContent> {
+	const weekOfYear = getWeek(new Date());
+	const year = getYear(new Date());
+
+	const slug = `${weekOfYear.toString().padStart(2, '0')}-${year}`;
+	return fetchAndMapLandingPageContent(slug);
+}
+
+export async function getRotatingContent(): Promise<RotatingContent> {
+	return await fetchRotatingContent();
+}
+
+export async function addNextWeeksLandingPageContent(weeksInTheFuture: number = 4) {
+	// Obtiene información para generar slug de la configuración contenido de landing page activo (MM-YYYY)
+	const currentDate = new Date();
+	const currentWeekOfYear = getWeek(currentDate);
+	const year = getYear(currentDate);
+	const currentLandingPageSlug = `${currentWeekOfYear.toString().padStart(2, '0')}-${year}`;
+
+	// Obtiene los nombres de los documentos de contenido de la landing page, obteniendo en formato MM-YYYY las próximas 'weeksIntheFuture' semanas
+	const slugs = Array.from({ length: weeksInTheFuture }, () => '').map((_, index) => {
+		const date = addWeeks(currentDate, index + 1); // Se obtiene una semana futura en base a correr la fecha actual una semana
+		const weekOfYear = getWeek(date);
+		const year = getYear(date);
+		return `${weekOfYear.toString().padStart(2, '0')}-${year}`;
+	});
+
+	const existingLandingPagesList = await fetchLandingPagesList(slugs);
+
+	if (!existingLandingPagesList) {
+		throw new Error(`Could not retrieve the landing page configs for the [${slugs.join(', ')}] slugs not found.`);
+	}
+
+	if (existingLandingPagesList.length >= weeksInTheFuture) {
+		// En caso que el resultado de la query arroje que existan las próximas N semanas ya cargadas,
+		// procedemos a retornar una lista vacía y no hacer agregados
+		return [];
+	}
+
+	const latestLandingPageConfig = await fetchLatestLandingPageReferences();
+
+	if (!latestLandingPageConfig) {
+		throw new Error(`Latest landing page for the '${currentLandingPageSlug}' slug content not found`);
+	}
+
+	const notLoadedWeeks = slugs.filter((t) => !existingLandingPagesList.find((r) => r.config === t));
+
+	const landingPageObjects = notLoadedWeeks.map((weekYear) => {
+		const { _id: _, ...config } = latestLandingPageConfig;
+		return {
+			...config,
+			config: weekYear,
+			slug: {
+				_type: 'slug',
+				current: slugify(weekYear),
+			},
+		};
+	});
+
+	return await createLandingPages(landingPageObjects);
+}

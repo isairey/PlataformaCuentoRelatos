@@ -1,0 +1,21 @@
+name: 🎨 Proponer mejoras en UI/UX
+description: Proponer mejoras en el diseño y la usabilidad de la plataforma
+labels: ['🎨 ui-ux', '✍️ bosquejo']
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Descripción
+      description: Detalla la propuesta de mejora relacionada a UI/UX de la manera más detallada posible.
+      placeholder: |
+        Por ejemplo: "Rediseño de tarjetas de stories para storylists", "Mejoras en diseño de navbar", "Mejoras en experiencia de lectura", "Propuesta de diseño para ordenamiento de elementos mutlimedia relacionados a stories", etc..
+    validations:
+      required: true
+  - type: textarea
+    id: resources
+    attributes:
+      label: Recursos
+      description: Una lista de uno o más recursos relacionados al contenido propuesto. Se recomienda acompañar prototipos, wireframes, enlaces a otras webs o diseños para los issues de este tipo, construidos digitalmente o dibujados a mano.
+      placeholder: |
+        * [Link a nuevos wireframes](https://www.recurso1.com)
+        * [Link a scan para cambiar ubicación de elementos gráficos en vista de lectura](https://www.recurso2.com)

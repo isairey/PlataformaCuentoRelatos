@@ -1,0 +1,163 @@
+{
+	"name": "@cuentoneta/app",
+	"$schema": "node_modules/nx/schemas/project-schema.json",
+	"projectType": "application",
+	"sourceRoot": "./src",
+	"prefix": "cuentoneta",
+	"tags": [],
+	"targets": {
+		"build": {
+			"executor": "@angular-devkit/build-angular:application",
+			"outputs": ["{options.outputPath}"],
+			"options": {
+				"clearScreen": true,
+				"outputPath": "dist/cuentoneta/",
+				"security": {
+					"allowedHosts": ["cuentoneta-*-reset-*.vercel.app", "cuentoneta.ar", "*.cuentoneta.ar"]
+				},
+				"index": "./src/indexFile.html",
+				"browser": "./src/main.ts",
+				"polyfills": [],
+				"tsConfig": "./tsconfig.app.json",
+				"inlineStyleLanguage": "css",
+				"assets": [
+					"./src/favicon.ico",
+					"./src/assets",
+					{
+						"glob": "**/*",
+						"input": "public"
+					}
+				],
+				"server": "./src/main.server.ts",
+				"styles": ["./src/styles.css", "./src/assets/css/typography.css"],
+				"scripts": [],
+				"ssr": {
+					"entry": "./src/server.ts"
+				},
+				"outputMode": "server"
+			},
+			"configurations": {
+				"production": {
+					"budgets": [
+						{
+							"type": "initial",
+							"maximumWarning": "500kb",
+							"maximumError": "1mb"
+						},
+						{
+							"type": "anyComponentStyle",
+							"maximumWarning": "2kb",
+							"maximumError": "4kb"
+						}
+					],
+					"outputHashing": "all"
+				},
+				"development": {
+					"optimization": false,
+					"extractLicenses": false,
+					"sourceMap": true,
+					"namedChunks": true
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"lint": {
+			"executor": "@nx/eslint:lint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["./src/**/*.ts", "./src/**/*.html"]
+			}
+		},
+		"test": {
+			"executor": "@nx/jest:jest",
+			"outputs": [],
+			"options": {
+				"jestConfig": "jest.config.ts",
+				"aot": true
+			}
+		},
+		"storybook": {
+			"executor": "@storybook/angular:start-storybook",
+			"options": {
+				"port": 4400,
+				"configDir": "./.storybook",
+				"browserTarget": "@cuentoneta/app:build",
+				"compodoc": false,
+				"styles": ["./src/styles.css", "./src/assets/css/typography.css"]
+			},
+			"configurations": {
+				"ci": {
+					"quiet": true
+				}
+			}
+		},
+		"build-storybook": {
+			"executor": "@storybook/angular:build-storybook",
+			"outputs": ["{options.outputDir}"],
+			"options": {
+				"outputDir": "dist/storybook/cuentoneta",
+				"configDir": "./.storybook",
+				"browserTarget": "@cuentoneta/app:build",
+				"compodoc": false,
+				"styles": ["./src/styles.css", "./src/assets/css/typography.css"]
+			},
+			"configurations": {
+				"ci": {
+					"quiet": true
+				}
+			}
+		},
+		"serve": {
+			"executor": "@nx/angular:dev-server",
+			"configurations": {
+				"production": {
+					"buildTarget": "@cuentoneta/app:build:production"
+				},
+				"development": {
+					"buildTarget": "@cuentoneta/app:build:development"
+				}
+			},
+			"defaultConfiguration": "development",
+			"continuous": true
+		},
+		"stylelint": {
+			"executor": "nx-stylelint:lint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["**/*.css"]
+			}
+		},
+		"test-storybook": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "test-storybook -c ./.storybook --url=http://localhost:4400"
+			}
+		},
+		"static-storybook": {
+			"executor": "@nx/web:file-server",
+			"dependsOn": ["build-storybook"],
+			"options": {
+				"buildTarget": "@cuentoneta/app:build-storybook",
+				"staticFilePath": "dist/storybook/cuentoneta",
+				"spa": true
+			},
+			"configurations": {
+				"ci": {
+					"buildTarget": "@cuentoneta/app:build-storybook:ci"
+				}
+			}
+		},
+		"e2e": {
+			"executor": "@nx/playwright:playwright",
+			"outputs": ["{workspaceRoot}/playwright-report"],
+			"options": {
+				"config": "{projectRoot}/playwright.config.ts"
+			},
+			"configurations": {
+				"ci": {
+					"ci": true
+				}
+			}
+		}
+	}
+}

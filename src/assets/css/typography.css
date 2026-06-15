@@ -1,0 +1,31 @@
+/* Design System V3 - Typography Classes */
+
+/*
+ * Inter Typography: Use pure Tailwind utilities instead of custom classes
+ * Example: class="font-inter text-xs font-semibold"
+ *
+ * Available sizes: text-xxs, text-xs, text-sm, text-base, text-lg, text-xl, text-2xl, text-4xl, text-6xl
+ * Available weights: font-normal, font-medium, font-semibold, font-bold
+ */
+
+/* Source Serif Pro Typography Classes - custom sizes with non-standard line-heights */
+.source-serif-xl {
+	@apply font-source-serif;
+
+	font-size: 1.25rem;
+	line-height: 2.125rem; /* 20px/34px */
+}
+
+.source-serif-2-5xl {
+	@apply font-source-serif;
+
+	font-size: 1.75rem;
+	line-height: 1.75rem; /* 28px/28px */
+}
+
+.source-serif-4xl {
+	@apply font-source-serif;
+
+	font-size: 2.5rem;
+	line-height: 2.5rem; /* 40px/40px */
+}

@@ -1,0 +1,50 @@
+{
+	"compilerOptions": {
+		"moduleResolution": "bundler",
+		"emitDecoratorMetadata": false,
+		"target": "es2022",
+		"module": "preserve",
+		"lib": ["dom", "es2022"],
+		"paths": {
+			"@components/*": ["src/app/components/*"],
+			"@mocks/*": ["src/app/mocks/*"],
+			"@models/*": ["src/app/models/*"],
+			"@utils/*": ["src/app/utils/*"]
+		},
+		"isolatedModules": true,
+		"baseUrl": ".",
+		"skipLibCheck": true,
+		"strict": true
+	},
+	"files": [],
+	"include": [],
+	"references": [
+		{
+			"path": "./tsconfig.app.json"
+		},
+		{
+			"path": "./tsconfig.spec.json"
+		},
+		{
+			"path": "./tsconfig.editor.json"
+		},
+		{
+			"path": "./.storybook/tsconfig.json"
+		}
+	],
+	"compileOnSave": false,
+	"exclude": ["node_modules", "tmp"],
+	"angularCompilerOptions": {
+		"enableI18nLegacyMessageIdFormat": false,
+		"strictInjectionParameters": true,
+		"strictInputAccessModifiers": true,
+		"typeCheckHostBindings": true,
+		"strictTemplates": true
+	},
+	"ts-node": {
+		"esm": true,
+		"compilerOptions": {
+			"module": "ESNext"
+		}
+	}
+}

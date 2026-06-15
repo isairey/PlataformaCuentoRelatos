@@ -1,0 +1,28 @@
+name: 🏎️ Proponer una nueva funcionalidad
+description: Proponer el agregado de una nueva funcionalidad o característica al proyecto
+labels: ['🏎️ mejora', '✍️ bosquejo']
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Descripción
+      description: Describe la funcionalidad a implementar de forma clara y concisa.
+      placeholder: |
+        Por ejemplo: "Agregar soporte para '...' a fin de lograr '...'"
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Criterios de aceptación
+      description: Una breve descripción que relate cómo la funcionalidad en cuestión puede ser probada.
+      placeholder: |
+        Por ejemplo: "Cuando hago '...' debería ocurrir '...'"
+  - type: textarea
+    id: resources
+    attributes:
+      label: Recursos
+      description: Una lista de recursos, opcional, que sirva de guía en la implementación de la funcionalidad.
+      placeholder: |
+        * [Recurso 1](https://www.recurso1.com)
+        * [Recurso 2](https://www.recurso2.com)

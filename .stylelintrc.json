@@ -1,0 +1,31 @@
+{
+	"extends": ["stylelint-config-recommended", "stylelint-config-standard"],
+	"rules": {
+		"at-rule-no-unknown": [
+			true,
+			{
+				"ignoreAtRules": ["apply", "layer", "responsive", "screen", "tailwind", "variants", "use"]
+			}
+		],
+		"at-rule-no-deprecated": [
+			true,
+			{
+				"ignoreAtRules": ["apply", "layer", "responsive", "screen", "tailwind", "variants", "use"]
+			}
+		],
+		"no-descending-specificity": null,
+		"selector-pseudo-class-no-unknown": [
+			true,
+			{
+				"ignorePseudoClasses": ["global"]
+			}
+		],
+		"selector-pseudo-element-no-unknown": [
+			true,
+			{
+				"ignorePseudoElements": ["ng-deep"]
+			}
+		]
+	},
+	"ignoreFiles": ["!**/*", "dist/**/*"]
+}
