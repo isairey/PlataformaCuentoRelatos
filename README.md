@@ -87,7 +87,7 @@ Convertirse en una referencia digital para la literatura breve en habla hispana,
 ## 📂 Arquitectura General
 
 ```plaintext
-La-Cuentoneta/
+PlataformaCuentoRelatos/
 │
 ├── src/
 │   ├── components/
@@ -177,13 +177,13 @@ Estas organizaciones colaboran activamente en:
 ### Clonar repositorio
 
 ```bash
-git clone https://github.com/isair/la-cuentoneta.git
+git clone https://github.com/isairey/PlataformaCuentoRelatos.git
 ```
 
 ### Acceder al proyecto
 
 ```bash
-cd la-cuentoneta
+cd PlataformaCuentoRelatos
 ```
 
 ### Instalar dependencias
